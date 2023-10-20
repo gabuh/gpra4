@@ -1,2 +1,6 @@
-# gpra4
-Project based on project management subject from my current course in 2023
+# GPRA4 - Project
+
+Website that defines different profiles for cryptocurrency investors.
+
+
+
