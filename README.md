@@ -4,7 +4,11 @@ Website that defines different profiles for cryptocurrency investors.
 
 
 
-User `git branch -a`
+Use `branch -a` to list branch structure:
+
+```
+git branch -a
+```
 
 ```cli
 C:\Users\UserName\Programming\gpra4>git branch -a
@@ -17,6 +21,10 @@ C:\Users\UserName\Programming\gpra4>git branch -a
 ```
 
 Select a branch using `git checkout [branch name]`
+
+```
+git checkout
+```
 
 ```cli
 C:\Users\UserName\Programming\gpra4>git checkout front-1.issue
