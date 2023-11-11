@@ -83,10 +83,15 @@ async function logData(func){
     func().then(response => console.log(response));
 }
 //#endregion
+function isHidden(el) {
+    return el.offsetParent === null;
+}
 
 function updateTable(dataArray = []){
     const tableBodyElement = document.querySelector('#currencyTable tbody');
+    const tableBodyMobile = document.querySelector('#currencyMobileTable tbody');
     tableBodyElement.innerHTML = '';
+    tableBodyMobile.innerHTML = '';
 
     dataArray.forEach(coin => {
             const row = document.createElement('tr');
@@ -110,8 +115,13 @@ function updateTable(dataArray = []){
 
             row.innerHTML = newTable;
 
-
-            tableBodyElement.appendChild(row);
+            if(isHidden(tableBodyElement)){
+                tableBodyMobile.appendChild(row);
+            }
+            
+            if(isHidden(tableBodyMobile)){
+                tableBodyElement.appendChild(row);
+            }
     })
 }
 
@@ -123,7 +133,6 @@ const titleElement = document.querySelector('.title');
 const fetchTimer = setInterval(() => getSelectedCoins()
     .then((response) => {
         updateTable(response);
-        console.log(response)
     }), fetchInterval);
 
 
