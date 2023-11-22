@@ -13,59 +13,6 @@
     
     <section class="hero is-fullheight has-background-primary">
         <div class="hero-head">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-
-                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                <div id="navbarBasicExample" class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item">
-                            Home
-                        </a>
-                        <a class="navbar-item">
-                            Documentation
-                        </a>
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                More
-                            </a>
-                            <div class="navbar-dropdown">
-                                <a class="navbar-item">
-                                    About
-                                </a>
-                                <a class="navbar-item">
-                                    Jobs
-                                </a>
-                                <a class="navbar-item">
-                                    Contact
-                                </a>
-                                <hr class="navbar-divider">
-                                <a class="navbar-item">
-                                    Report an issue
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="navbar-end">
-                        <div class="navbar-item">
-                            <div class="buttons">
-                                <a class="button is-primary">
-                                    <strong>Sign up</strong>
-                                </a>
-                                <a class="button is-light">
-                                    Log in
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
 
         </div>
       <div class="hero-body">
@@ -186,7 +133,7 @@
 
 
                         <div class="columns is-mobile">
-                            <div class="column">
+                            <div class="column js-modal-trigger" data-target="profileA">
                                 <div class="box has-background-primary content ">
                                     <figure class="image">
                                         <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -194,7 +141,7 @@
                                     <p>Perfil A</p>
                                 </div>
                             </div>
-                            <div class="column">
+                            <div class="column js-modal-trigger" data-target="profileB">
                                 <div class="box has-background-primary content">
                                     <figure class="image">
                                         <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -204,7 +151,7 @@
                         </div>
 
                         <div class="columns is-mobile">
-                            <div class="column">
+                            <div class="column js-modal-trigger" data-target="profileC">
                                 <div class="box has-background-primary content">
                                     <figure class="image">
                                         <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -212,7 +159,7 @@
                                     <p>Perfil C</p>
                                 </div>
                             </div>
-                            <div class="column">
+                            <div class="column js-modal-trigger" data-target="profileD">
                                 <div class="box has-background-primary content">
                                     <figure class="image">
                                         <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -228,6 +175,39 @@
                 
 
 
+                <div class="modal" id="profileA">
+                    <div class="modal-background"></div>
+                        <div class="modal-content">
+                            
+                        </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
+                <div class="modal" id="profileB">
+                    <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <!-- Any other Bulma elements you want -->
+                        </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
+                <div class="modal" id="profileC">
+                    <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <!-- Any other Bulma elements you want -->
+                        </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
+
+                <div class="modal" id="profileD">
+                    <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <!-- Any other Bulma elements you want -->
+                        </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
             </div> <!-- container -->
         </div> <!-- hero body-->
 
@@ -235,7 +215,7 @@
 
                 <div class="content is-large mb-6 mr-1 has-text-right">
                     <!-- <h3>Como o perfil é definido?</h3> -->
-                    <a>Como o perfil é definido?</a>
+                    <a href="/profile.html">Como o perfil é definido?</a>
                 </div>
             
         
@@ -408,12 +388,14 @@
 
 
                 <div class="column">
-                    <div class="box has-background-primary has-text-centered content">
-                        <h1>Pergunta X</h1>
-                        <div class="box">Alternativa A</div>
-                        <div class="box">Alternativa B</div>
-                        <div class="box">Alternativa C</div>
-                        <div class="box">Alternativa D</div>
+                    <div class="box has-background-primary has-text-centered content" id="questions">
+                        <p>
+                            <h1>Pergunta X</h1>
+                            <div class="box">Alternativa A</div>
+                            <div class="box">Alternativa B</div>
+                            <div class="box">Alternativa C</div>
+                            <div class="box">Alternativa D</div>
+                        </p>
                         
                         <div class="columns is-justify-content-space-around">
                             <button class="button is-black">Anterior</button> 
@@ -421,6 +403,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <div class="column is-hidden-mobile">
                     <div class="content is-large">
@@ -451,6 +436,7 @@
         </footer>
     </div>
 </section>
+
 
 
 
