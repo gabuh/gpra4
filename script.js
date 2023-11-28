@@ -1,3 +1,43 @@
+class QuestionCard {
+    constructor(question, a, b, c, d){
+        this.question = question
+        this.a = a
+        this.b = b 
+        this.c = c 
+        this.d = d
+    }
+
+
+    getQuestion(){
+        return {
+            question : this.question,
+            a : this.a,
+            b : this.b,
+            c : this.c,
+            d : this.d
+        }
+    }
+
+    getAnswer(){
+        if(this.answer === 0){
+            return this.a
+        }else if(this.answer === 1){
+            return this.b
+        }else if(this.answer === 2){
+            return this.c
+        }else if(this.answer === 3){
+            return this.d
+        }
+    
+    }
+
+    setAnswer(number){
+        this.answer = number;
+    }
+
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Get all "navbar-burger" elements
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -83,10 +123,15 @@ async function logData(func){
     func().then(response => console.log(response));
 }
 //#endregion
+function isHidden(el) {
+    return el.offsetParent === null;
+}
 
 function updateTable(dataArray = []){
     const tableBodyElement = document.querySelector('#currencyTable tbody');
+    const tableBodyMobile = document.querySelector('#currencyMobileTable tbody');
     tableBodyElement.innerHTML = '';
+    tableBodyMobile.innerHTML = '';
 
     dataArray.forEach(coin => {
             const row = document.createElement('tr');
@@ -110,10 +155,73 @@ function updateTable(dataArray = []){
 
             row.innerHTML = newTable;
 
-
-            tableBodyElement.appendChild(row);
+            if(isHidden(tableBodyElement)){
+                tableBodyMobile.appendChild(row);
+            }
+            
+            if(isHidden(tableBodyMobile)){
+                tableBodyElement.appendChild(row);
+            }
     })
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Functions to open and close a modal
+    function openModal($el) {
+      $el.classList.add('is-active');
+    }
+  
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
+  
+    function closeAllModals() {
+      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+      });
+    }
+  
+
+
+
+    // Add a click event on buttons to open a specific modal
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+  
+      $trigger.addEventListener('click', () => {
+        openModal($target);
+      });
+    });
+  
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+      const $target = $close.closest('.modal');
+  
+      $close.addEventListener('click', () => {
+        closeModal($target);
+      });
+    });
+  
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'Escape') {
+        closeAllModals();
+      }
+    });
+  });
+
+
+getSelectedCoins()
+    .then((response) => {
+        updateTable(response);
+    })
+
+
+
+
 
 //Calls
 const fetchSecondsInterval = 5;
@@ -123,10 +231,43 @@ const titleElement = document.querySelector('.title');
 const fetchTimer = setInterval(() => getSelectedCoins()
     .then((response) => {
         updateTable(response);
-        console.log(response)
     }), fetchInterval);
 
 
-$(document).ready(function () {
-    $('#currencyTable').DataTable();
-});
+// $(document).ready(function () {
+//     $('#currencyTable').DataTable();
+// });
+
+
+
+
+
+
+
+
+
+const QuestionBox = {
+ box : document.getElementById("questions"),
+
+updateQuestion(questionCard){
+        this.box.innerHTML = ''
+        const p = document.createElement('P')
+        const hmtl = `<h1>${questionCard.question}</h1>
+        <div class="box" id="answerA">${questionCard.a}</div>
+        <div class="box" id="answerB">${questionCard.b}</div>
+        <div class="box" id="answerC">${questionCard.c}</div>
+        <div class="box" id="answerD">${questionCard.d}</div>
+        <div class="columns is-justify-content-space-around">
+            <button class="button is-black">Anterior</button> 
+            <button class="button is-black">Próxima</button>
+        </div>`
+        p.innerHTML = hmtl
+        console.log(p)
+        this.box.appendChild(p)
+    }
+}
+
+
+QuestionBox.updateQuestion(new QuestionCard("What is the capital of France?", "Paris", "London", "Berlin", "Madrid"))
+ 
+
