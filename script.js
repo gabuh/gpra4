@@ -287,16 +287,198 @@ const QuestionBox = {
                 questionCard.setAnswer(index);
 
                 if (this.selectedAnswers.length === this.questionCards.length) {
-                    let answerSum = 0;
-                    this.questionCards.forEach(element => {
-                        answerSum = element.getAnswerNumber() + answerSum
-                    });
+                    let sumBeginner = 0
+                    let sumTechnician = 0
+                    let sumDayTrader = 0  
 
-                    if(answerSum == 2){
-                        document.getElementById("definedProfileD").classList.add("is-active")
-                    }
+                    let sumHODLer = 0
+                    let sumContrarian = 0
+                    let sumICO = 0
+                    let sumCareful = 0
+    
 
-                    console.log("All questions answered! " + "answerSum " + answerSum);
+                    var lista = [
+                        { //prazo
+                            "0": ()=> {
+                                sumDayTrader++
+                                sumTechnician++
+                                sumHODLer--
+                            },
+                            "1": ()=> {
+                                sumDayTrader--
+                                sumTechnician--
+                            },
+                            "2": ()=> {
+                                sumDayTrader--
+                                sumTechnician--
+                                sumHODLer++
+                            },
+                            "3":()=> {
+                                sumDayTrader--
+                                sumTechnician--
+                                sumHODLer++
+                            }
+                        },
+                        { //risco
+                            "0": ()=> {
+                                sumICO++
+                                sumContrarian++
+                                sumCareful--
+                                sumHODLer--
+                            },
+                            "1": ()=> {
+                                sumICO++
+                                sumContrarian--
+                                sumCareful++
+                                sumHODLer--
+                            },
+                            "2": ()=> {
+                                sumICO-- 
+                                sumContrarian--
+                                sumCareful++
+                                sumHODLer++
+                            },
+                            "3":()=> {
+                                
+                            }
+                        },
+                        { //razao
+                            "0": ()=> {
+
+                            },
+                            "1": ()=> {
+                                sumHODLer++
+                            },
+                            "2": ()=> {
+                   
+                            },
+                            "3":()=> {
+                                
+                            }
+                        },
+                        { //quais moedas
+                            "0": ()=> {
+                                sumBeginner++
+                            },
+                            "1": ()=> {
+                                sumBeginner++
+                            },
+                            "2": ()=> {
+                                sumBeginner--
+                                sumContrarian = sumContrarian + 3
+                            },
+                            "3":()=> {
+                                
+                            }
+                        },
+                        { //negociações
+                            "0": ()=> {
+                                sumDayTrader++
+                                sumBeginner--
+                                sumHODLer--
+                            },
+                            "1": ()=> {
+                                sumDayTrader--
+                                sumBeginner--
+                                sumHODLer--
+                            },
+                            "2": ()=> {
+                                sumDayTrader--
+                                sumBeginner--
+                                sumHODLer++
+                            },
+                            "3":()=> {
+                                sumBeginner++
+                            }
+                        },
+                        { //regulamentações
+                            "0": ()=> {
+                                sumBeginner--
+                            },
+                            "1": ()=> {
+                                sumBeginner--
+                            },
+                            "2": ()=> {
+
+                            },
+                            "3":()=> {
+                                sumBeginner++
+                            }
+                        },
+                        { //análises
+                            "0": ()=> {
+                                sumTechnician++
+                            },
+                            "1": ()=> {
+                                sumTechnician++
+                            },
+                            "2": ()=> {
+                                sumTechnician--
+                            },
+                            "3":()=> {
+                                sumTechnician++
+                            }
+                        }
+                    ]
+
+                    this.questionCards.forEach((option, index) => {
+                        lista[index][option.getAnswerNumber()]()
+
+                    })
+                    
+                    
+                    const valores = {
+                        sumBeginner,
+                        sumCareful,
+                        sumContrarian,
+                        sumDayTrader,
+                        sumHODLer,
+                        sumICO,
+                        sumTechnician,
+                      };
+                      
+                      // Encontrando o maior valor e seu respectivo nome
+                      let maiorNome;
+                      let maiorValor = -Infinity;
+                      
+                      for (const [nome, valor] of Object.entries(valores)) {
+                        if (valor > maiorValor) {
+                          maiorValor = valor;
+                          maiorNome = nome;
+                        }
+                      }
+                      
+                      // Tomando ação com base no maior valor
+                      switch (maiorNome) {
+                        case 'sumBeginner':
+                          document.getElementById("definedBeginnerProfile").classList.add("is-active")
+                          break;
+                        case 'sumCareful':
+                          document.getElementById("definedCarefulProfile").classList.add("is-active")
+                          break;
+                        case 'sumContratian':
+                            document.getElementById("definedContratianProfile").classList.add("is-active")
+                            break;
+                        case 'sumDayTrader':
+                          document.getElementById("definedDayTraderProfile").classList.add("is-active")
+                          break;
+                          case 'sumHODLer':
+                          document.getElementById("definedHODlerProfile").classList.add("is-active")
+                          break;
+
+                          case 'sumICO':
+                          document.getElementById("definedICOprofile").classList.add("is-active")
+                          break;
+                          
+                          case 'sumTechnician':
+                          document.getElementById("definedTechnicianProfile").classList.add("is-active")
+                          break;
+
+                        default:
+                          document.getElementById("definedUnkown").classList.add("is-active")
+                      }
+
+                    
                 }
 
             });
@@ -321,10 +503,6 @@ const QuestionBox = {
             answerOptions[previousAnswer].classList.add('has-background-warning');
         }
     },
-    defineProfile(){
-
-    }
-    ,
 
     showAnswers(){
         this.questionCards.forEach(element => {
@@ -334,8 +512,27 @@ const QuestionBox = {
 
 };
 
-QuestionBox.questionCards.push(new QuestionCard("What is the capital of France?", "Paris", "London", "Berlin", "Madrid"));
-QuestionBox.questionCards.push(new QuestionCard("What is the largest mammal?", "Elephant", "Blue Whale", "Giraffe", "Kangaroo"));
+QuestionBox.questionCards.push(new QuestionCard("Qual é o seu horizonte de investimento?",
+ "Mensal", "1-2 anos", "3-9 anos", "10+ anos"));
+
+QuestionBox.questionCards.push(new QuestionCard("Qual é o seu nível de tolerância ao risco em relação às oscilações de preço das criptomoedas?",
+"Alto", "Médio", "Baixo", "Ainda não sei"));
+
+QuestionBox.questionCards.push(new QuestionCard("Qual é a principal razão para seus investimentos em criptomoedas?",
+ "Diversificação de carteira", "Aposentadoria", "Aumento de patrimônio", "Ainda não invisto em criptomoedas"));
+
+ QuestionBox.questionCards.push(new QuestionCard("Em quais criptomoedas você está atualmente investindo?",
+ "Bitcoin ou Ethereum", "Apenas Bitcoin", "Outras criptomoedas", "Ainda não invisto em criptomoedas"));
+
+QuestionBox.questionCards.push(new QuestionCard("Você costuma fazer negociações diárias, semanais ou mensais?",
+ "Diárias", "Semanais", "Mensais", "Ainda não faço negociações"));
+
+ QuestionBox.questionCards.push(new QuestionCard("Você está ciente das regulamentações em relação às criptomoedas em sua jurisdição?",
+ "Sim, acompanho de forma constante", "Sim, mas não de forma frequente", "Não, pois não vejo necessidade ", "Não sabia que existia regulamentação"));
+ 
+ QuestionBox.questionCards.push(new QuestionCard("Você utiliza análise técnica para tomar decisões de compra e venda?",
+ "Sim, sempre", "Sim, mas raramente", "Não, e não considero um bom método", "Não, mas considero um bom método"));
+
 
 // initial update
 QuestionBox.updateQuestion();
