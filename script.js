@@ -31,6 +31,10 @@ class QuestionCard {
     
     }
 
+    getAnswerNumber(){
+        return this.answer;
+    }
+
     setAnswer(number){
         this.answer = number;
     }
@@ -239,34 +243,100 @@ const fetchTimer = setInterval(() => getSelectedCoins()
 // });
 
 
-
-
-
-
+document.getElementById('makeATest').addEventListener('click', function() {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth' 
+    });
+});
 
 
 
 const QuestionBox = {
- box : document.getElementById("questions"),
+    box: document.getElementById("questions"),
+    currentQuestionIndex: 0,
+    questionCards: [],
+    selectedAnswers: [], // srray to store selected answers for each question
 
-updateQuestion(questionCard){
-        this.box.innerHTML = ''
-        const p = document.createElement('P')
-        const hmtl = `<h1>${questionCard.question}</h1>
-        <div class="box" id="answerA">${questionCard.a}</div>
-        <div class="box" id="answerB">${questionCard.b}</div>
-        <div class="box" id="answerC">${questionCard.c}</div>
-        <div class="box" id="answerD">${questionCard.d}</div>
-        <div class="columns is-justify-content-space-around">
-            <button class="button is-black">Anterior</button> 
-            <button class="button is-black">Próxima</button>
-        </div>`
-        p.innerHTML = hmtl
-        console.log(p)
-        this.box.appendChild(p)
+    updateQuestion() {
+        const questionCard = this.questionCards[this.currentQuestionIndex];
+        this.box.innerHTML = '';
+
+        const p = document.createElement('P');
+        const html = `<h1>${questionCard.question}</h1>
+            <div class="box" id="answerA">${questionCard.a}</div>
+            <div class="box" id="answerB">${questionCard.b}</div>
+            <div class="box" id="answerC">${questionCard.c}</div>
+            <div class="box" id="answerD">${questionCard.d}</div>
+            <div class="columns is-justify-content-space-around">
+                <button class="button is-black" id="previousBtn">Anterior</button>
+                <button class="button is-black" id="nextBtn">Próxima</button>
+            </div>`;
+
+        p.innerHTML = html;
+        this.box.appendChild(p);
+
+        const answerOptions = this.box.querySelectorAll('.box');
+        answerOptions.forEach((option, index) => {
+            option.addEventListener('click', () => {
+       
+                answerOptions.forEach(opt => opt.classList.remove('has-background-warning'));
+            
+                option.classList.add('has-background-warning');
+                this.selectedAnswers[this.currentQuestionIndex] = index;
+                questionCard.setAnswer(index);
+
+                if (this.selectedAnswers.length === this.questionCards.length) {
+                    let answerSum = 0;
+                    this.questionCards.forEach(element => {
+                        answerSum = element.getAnswerNumber() + answerSum
+                    });
+
+                    if(answerSum == 2){
+                        document.getElementById("definedProfileD").classList.add("is-active")
+                    }
+
+                    console.log("All questions answered! " + "answerSum " + answerSum);
+                }
+
+            });
+        });
+
+        document.getElementById('previousBtn').addEventListener('click', () => {
+            this.currentQuestionIndex = Math.max(0, this.currentQuestionIndex - 1);
+            this.updateQuestion();
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            this.currentQuestionIndex = Math.min(
+                this.questionCards.length - 1,
+                this.currentQuestionIndex + 1
+            );
+            this.updateQuestion();
+        });
+
+        // set the background color for the previously selected answer
+        const previousAnswer = this.selectedAnswers[this.currentQuestionIndex];
+        if (previousAnswer !== undefined) {
+            answerOptions[previousAnswer].classList.add('has-background-warning');
+        }
+    },
+    defineProfile(){
+
     }
-}
+    ,
 
+    showAnswers(){
+        this.questionCards.forEach(element => {
+            console.log(element.getAnswer())
+        });
+    }
 
+};
 
+QuestionBox.questionCards.push(new QuestionCard("What is the capital of France?", "Paris", "London", "Berlin", "Madrid"));
+QuestionBox.questionCards.push(new QuestionCard("What is the largest mammal?", "Elephant", "Blue Whale", "Giraffe", "Kangaroo"));
+
+// initial update
+QuestionBox.updateQuestion();
 
