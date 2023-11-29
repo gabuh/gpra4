@@ -268,6 +268,5 @@ updateQuestion(questionCard){
 }
 
 
-QuestionBox.updateQuestion(new QuestionCard("What is the capital of France?", "Paris", "London", "Berlin", "Madrid"))
- 
+
 
